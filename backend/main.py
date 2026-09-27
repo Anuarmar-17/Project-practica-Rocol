@@ -6,6 +6,10 @@ app = FastAPI()
 async def root ():
     return "Prueba"
 
+@app.get("/admin")
+async def admin():
+    return { "admin": "Anuar"}
+
 @app.get("/listaproductos")
-def listaproductos():
-    return ["producto 1", "producto 2", "producto 3",]
+async def listaproductos():
+    return {"productos": ["producto 1", "producto 2", "producto 3",]}
