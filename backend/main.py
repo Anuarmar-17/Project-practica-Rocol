@@ -49,37 +49,56 @@ async def productos():
 #Retorna un producto por id | PATH
 @app.get("/producto/{id}")
 async def producto(id: int):
-    producto = filter(lambda producto: producto.id == id, Lista_productos)
-    try:
-        return list(producto)[0]
-    except:
-        return { "error": "El producto no ha sido encontrado"}
+    return buscar_producto(id)
 
 
 #Retorna un producto por id | Query
 @app.get("/productoquery/")
 async def producto(id: int):
+    return buscar_producto(id)
+
+#Función buscar producto
+def buscar_producto(id: int):
     producto = filter(lambda producto: producto.id == id, Lista_productos)
     try:
         return list(producto)[0]
     except:
-        return { "error": "El producto no ha sido encontrado"}
+        return {"error": "El producto no ha sido encontrado"}
 
 
 #Retorna un usuario por id | PATH
 @app.get("/usuario/{id}")
 async def usuario(id: int):
-    usuario = filter(lambda usuario: usuario.id == id, Lista_usuarios)
-    try:
-        return list(usuarios)[0]
-    except:
-        return { "error": "El usuario no fue encontrado"}
+    return buscar_usuario(id)
+
 
 #Retorna un usuario por id | Query
 @app.get("/usuarioquery/")
 async def usuario(id: int):
+    return buscar_usuario(id)
+
+#Función buscar usuario
+def buscar_usuario(id: int):
     usuario = filter(lambda usuario: usuario.id == id, Lista_usuarios)
     try:
-        return list(usuarios)[0]
+        return list(usuario)[0]
     except:
-        return { "error": "El usuario no fue encontrado"}
+        return {"error": "El usuario no fue encontrado"}
+
+#Función crear usuario
+@app.post("/usuario/")
+async def usuario(nuevo_usuario: Usuario):
+    if type(buscar_usuario(nuevo_usuario.id)) == Usuario:
+        return {"error": "El usuario ya existe"}
+    else:
+        Lista_usuarios.append(nuevo_usuario)
+        return nuevo_usuario
+
+#Función crear producto
+@app.post("/producto/")
+async def producto(nuevo_producto: Producto):
+    if type(buscar_producto(nuevo_producto.id)) == Producto:
+        return {"error": "El producto ya existe"}
+    else:
+        Lista_productos.append(nuevo_producto)
+        return nuevo_producto
