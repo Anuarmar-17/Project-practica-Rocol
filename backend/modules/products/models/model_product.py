@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 
 #Objeto para productos
-class Producto(BaseModel):
+class Product(BaseModel):
     id: int
-    nombreP: str
-    precio: float
+    nameP: str
+    price: float
